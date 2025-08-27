@@ -1,7 +1,10 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html>
+    <head>
+        
+    </head>
 
-<body>
+<body class="flex items-center justify-center">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <div id="app"></div>
 

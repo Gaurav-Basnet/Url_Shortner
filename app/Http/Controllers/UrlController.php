@@ -16,6 +16,10 @@ class UrlController extends Controller
         ]);
         $random = Str::random(6);
 
+            while(Desc::where('short_code', $random)->exists()){
+        $random = Str::random(6);
+    }
+    
         $url = Desc::create([
             'original_url' => $validated['original_url'],
             'short_code' => $random,
