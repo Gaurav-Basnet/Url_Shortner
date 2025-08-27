@@ -4,20 +4,20 @@
 FROM node:18 AS frontend
 WORKDIR /app
 
-# Copy package.json and package-lock.json for caching
+# Copy package.json & package-lock.json for caching
 COPY package*.json ./
 
-# Install Node dependencies
+# Install dependencies
 RUN npm install
 
 # Copy all source files
 COPY . .
 
-# Build frontend (Vite will output to public/dist)
+# Build frontend
 RUN npm run build
 
 # ---------------------------
-# Stage 2: Build Backend (Laravel + PHP + Composer)
+# Stage 2: Backend (Laravel + PHP + Composer)
 # ---------------------------
 FROM php:8.2-fpm
 
@@ -41,14 +41,14 @@ RUN composer install --no-dev --optimize-autoloader
 COPY . .
 
 # Copy built frontend from Stage 1
-COPY --from=frontend /app/dist ./public/dist
+COPY --from=frontend /app/public/dist ./public/dist
 
 # Clear Laravel caches
 RUN php artisan config:clear \
     && php artisan route:clear \
     && php artisan view:clear
 
-# Expose port 9000 for php-fpm
+# Expose PHP-FPM port
 EXPOSE 9000
 
 # Start PHP-FPM
