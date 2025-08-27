@@ -8,6 +8,8 @@ export default defineConfig({
         laravel({
             input: ['resources/css/app.css', 'resources/js/app.js'],
             refresh: true,
+            // Tell Laravel plugin to output build in public/build
+            buildDirectory: 'public/dist', 
         }),
         tailwindcss(),
         vue(),
